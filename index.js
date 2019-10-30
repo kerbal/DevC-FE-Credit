@@ -3,17 +3,13 @@ const spawn = require('child_process').spawn;
 
 const app = express();
 
-app.get('/sum', (req, res) => {
-  // http://localhost:3000/sum?a=5&b=7
-  
-  const { a, b } = req.query;
-  const proc = spawn('python', ['./python/main.py', a, b]);
-
+app.get('/test', (req, res) => {
+  const proc = spawn('python', ['./python/main.py', 'https://i.imgur.com/SS53U2m.png']);
   proc.stdout.on('data', (data) => {
     res.send(data.toString());
   });
 });
 
-app.listen(3000, () => {
+app.listen(3000, async () => {
   console.log("Server is up");
 });

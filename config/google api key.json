@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "precise-tenure-256709",
+  "private_key_id": "73c646dd9fb2897dfc9846815c92aa9ce92520bd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCUkEZa8aEh9/pM\n0JbY+sHcfHKntCZhmEfL7fd3dU6PSREbvSgoYQv/wqMTDuhzkVLs74C5DvqFn7Kc\nAWbuQHuzu0War1DvgU+TUjOqMZncCustbom/0ojiWrpvOTKObS/hB8iP0TOSrG5V\nYGjRZj8A/itpdutuxalbxqappqCQlWUokm3HcMjydrMy85Lv97S8RrSdiO8aM36z\n2W5CqHH0BVqvcwnFV074vjr11tPUMqj6mHuxwxSYkyeYvDuHozL2cCFTt2HQiRDu\n+S9foj+vcqc6Eny2z6Hom6TodmEWh5VuXXaElP2yc6EPhUhki62UzWCNknKRfAvd\nu3Xbi8xHAgMBAAECggEADwyI/pq4u9F8JV6BKVGdZFGm5ki1aprGYGimnLnhT1po\nxT/lWtHEfrqfUkWRqRibfIIhA/NPJUyxXGQ3960d2sL+9gBfA86RhQGFV5mBVcI1\nYyYYsLm0QVmiG7TWON85Q7j0yWdjq1k+2UnUKay1zR/yEyjcsx01XqVCKgVFq9+O\nxST0jC6dmrprbEIJl4QtwZQ2Vo9sCx072TjtYvTVlNh1za5r6Cj+f0jIKv4IP2jJ\nYj//ZfjfF6lw7b4xvaCFxiZqULA7rNMiGxwUMPtW9jReysFzu4RduxdulSH5Uqx/\n70XSP4niuZ9mdeTzCXsTthJ4M9ecMoUE8HlBuaf7IQKBgQDGOIYimyNpmtlIUaIp\ndt/5T71X0q1MQfeziVYufaZ3kdRBfP6F6T/n4zx3MZQQ3AMNJYHVR1mv9vjq8ZEz\nYUyoD/c4/laKut/hTUob1DhrCthc5Jxf7S/ey+7Nw8mNVMLlo60+uGWanY6GTdbI\n5R8sc+pUB7iQsfQGZVO3euEa6wKBgQC/3kTJM3s3zY/qPK3jriMY7ucl+pteXRgz\nzj4YzP6QWbt1nJ7SEREHBz22DBta2RdCJhEVwhDDKiSF5pkHy/bhbt8awXWL+f5f\nQlNtvRlrE/Gotz6+jmOb2eR1ld8ev2+LS5JjtK7PsOlrlXyWsgnXuFNbQR1+JZ2j\nDdaQJSoFFQKBgQCGl9LcpKLDDlYDeQq3RPSIAND8VR0+7nwW+GYAY2kpP2f0n77j\nhqHR/sYL2SpE2F9qCdHC1BPeG8ChJy4EyUiXxV+E34473PAvt59ejhdQ96g6SzCz\nIgajLa4VIaA1yxwbeawlLmgvOFSSdUAmYQ1tzbeLH0L/XRXpUdwqddFryQKBgQCV\nIvK6pe6IAJt1yfar/AZB8ijvp20vGxOd6RjxdB4HHAiPMc9tn2Bp4yH/qEd3BTmD\n7EzpabBX0yESh5y5p7vdnK2EgY2Z4Rbs+oQYz5y7U4RKzSzTN6CLWwGuuHD22Hye\nfH5sS9x5iZzWSBrQk9D8wcThMKr5C8oNHMuDva98xQKBgQCIqOTbN9ZVV8gqNRbT\nVOy+OGC1BPgZ2tQQnCcBQZidocXDE8pNDlKv6gsMNyooheOED0l3pbC5pt1Oftxt\ndjOo8S80SJMmsZoYXCYLfFggsUAoR1FMZraQmFSBszU3jxx/J1OjSEtSnBpcqo2U\nFFpq4j2WFVWAW6ywtFe3RVdyQw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "fecredit@precise-tenure-256709.iam.gserviceaccount.com",
+  "client_id": "110311246143260101427",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/fecredit%40precise-tenure-256709.iam.gserviceaccount.com"
+}
