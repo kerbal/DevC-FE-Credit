@@ -1,12 +1,14 @@
 import sys
 import json
 import importlib
-import googleVision
+import ocrProcess
 import os
 
 if __name__ == "__main__":
   try:
-    response = googleVision.OCR(sys.argv[1])
-    print(response)
+    IDCardImageURL = sys.argv[1]
+    SelfieImageURL = sys.argv[2]
+    ocr = ocrProcess.ocrProcess(IDCardImageURL)
+    print(ocr)
   except Exception as e:
     print(str(e))
