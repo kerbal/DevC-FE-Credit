@@ -3,4 +3,3 @@ google-cloud-vision
 opencv-python
 numpy
 boto3
-urllib
