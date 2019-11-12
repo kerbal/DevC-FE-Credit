@@ -1,0 +1,6 @@
+numpy
+opencv-python
+boto3
+google-cloud
+google-cloud-vision
+flask
