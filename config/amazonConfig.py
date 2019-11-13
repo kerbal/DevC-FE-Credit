@@ -1,5 +1,5 @@
 AmazonConfig = {
-  'ACCESS_KEY': 'AKIAXVUHQZB76IKFFTFD',
-  'SECRET_KEY': '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',
+  'ACCESS_KEY': 'AKIAJ22OOOB23PZKPLLA',
+  'SECRET_KEY': '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',
   'region_name': 'us-east-1'
 }
