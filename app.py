@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, Response, request
 from services.main import main
 from services.imageReader import readFromPath
+import services.database as db
 import sys
 
 app = Flask(__name__)
@@ -9,7 +10,7 @@ app = Flask(__name__)
 def home():
   return "Hello, World!"
     
-@app.route("/test", methods=['POST'])
+@app.route("/register", methods=['POST'])
 def test():
   try:
     IdCardURL = request.json['IDCardImage']
@@ -21,16 +22,71 @@ def test():
       'Birthday': request.json['Birthday'],
       'Hometown': request.json['Hometown'],
       'Province': request.json['Province'],
-      'District': request.json['District']
+      'District': request.json['District'],
+      'PhoneNumber': request.json['PhoneNumber']
     }
 
-    response = main(IdCardURL, SelfieURL, info)
-    return jsonify(response), 200
+    userid = main(IdCardURL, SelfieURL, info)
+    
+    return jsonify({
+      "UserId": userid
+    }), 200
   except Exception as e:
     return jsonify({
       'message': str(e)
     }), 400
 
+@app.route("/forms")
+def getForms():
+  try:
+    response = db.getUserResult()
+    return jsonify({
+      'Forms': response
+    }), 200
+  except Exception as e:
+    print(e)
+    return jsonify({
+      'Forms': []
+    }), 400
+
+@app.route("/status", methods=['GET'])
+def getStatus():
+  try:
+    response = db.getVerificationStatus(request.args.get('id'))
+    return jsonify({
+      'Status': response
+    }), 200
+  except Exception as e:
+    print(e)
+    return jsonify({
+      'Status': False
+    }), 400
+
+@app.route("/status", methods=['PUT'])
+def setStatus():
+  try:
+    db.setVerificationStatus(request.args.get('id'), int(request.args.get('value')) == 1)
+    return jsonify({
+      'message': 'okey'
+    }), 200
+  except Exception as e:
+    return jsonify({
+      'message': str(e)
+    }), 400
+
+@app.route("/form")
+def getForm():
+  try:
+    id = request.args.get('id')
+    response = db.getUserResultById(id)
+    return jsonify({
+      'Form': response
+    }), 200
+  except Exception as e:
+    print(e)
+    return jsonify({
+      'Form': None
+    }), 400
+
 if __name__ == "__main__":
-  print(sys.argv)
   app.run(debug=True)

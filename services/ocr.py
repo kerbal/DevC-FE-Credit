@@ -78,8 +78,7 @@ def ocr(image, registerInfo):
   image = filter.sharpen(image)
 
   info = extractInfo(OCR(image))
-  print(registerInfo['Hometown'])
-  print(info['Hometown'])
+
   verify = {
     'FullnameResult': info['Fullname'] == registerInfo['Fullname'],
     'IdentityNumberResult': info['IdentityNumber'] == registerInfo['IdentityNumber'],
@@ -91,7 +90,4 @@ def ocr(image, registerInfo):
 
   verify['OCRResult'] = verify['FullnameResult'] and verify['IdentityNumberResult'] and verify['BirthdayResult'] and verify['HometownResult'] and verify['ProvinceResult'] and verify['DistrictResult']
 
-  return {
-    'verify': verify,
-    'info': info
-  }
+  return info, verify
