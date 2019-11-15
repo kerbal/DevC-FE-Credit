@@ -48,26 +48,50 @@ def extractInfo(text):
   number = text[begin_number + 2 : begin_name].strip().replace(' ', '')
   name = text[begin_name + 6 : begin_bd].strip()
   bd = text[begin_bd + 9: begin_address1].strip()
-  address1 = text[begin_address1 + 11 : begin_address2].strip()
-  address2 = text[begin_address2 + 19 : ].strip()
+  hometown = text[begin_address1 + 11 : begin_address2].strip().split(',')[-1].strip()
+  province = text[begin_address2 + 19 : ].strip().split(',')[-1].strip()
+  district = text[begin_address2 + 19 : ].strip().split(',')[-2].strip().replace('tp', '').strip()
 
   return {
-    'number': number,
-    'name': name,
-    'birthday': bd,
-    'address1': address1,
-    'address2': address2
+    'IdentityNumber': number,
+    'Fullname': name.title(),
+    'Birthday': bd,
+    'Hometown': hometown.title(),
+    'Province': province.title(),
+    'District': district.title()
   }
 
-def ocr(image):
-  image = filter.denoise(image)
-  image = filter.advancedEqualizeHist(image)
-  image = filter.denoiseGray(image)
-  contour = findContour(image)
+def ocr(image, registerInfo):
+  tmp = image.copy()
+  tmp = filter.denoise(tmp)
+  tmp = filter.advancedEqualizeHist(tmp)
+  tmp = filter.denoiseGray(tmp)
+  contour = findContour(tmp)
   points = np.array(contour.reshape(4, 2) * 1)
   image = fourPointTransform(image, points)
 
-  image = image[int(image.shape[0] * 0.25) : image.shape[0], 
-               int(image.shape[1] * 0.3) : image.shape[1]]
+  image = image[int(image.shape[0] * 0.225) : image.shape[0], 
+                int(image.shape[1] * 0.3) : image.shape[1]]
   
-  return extractInfo(OCR(image))
+  image = filter.denoise(image)
+  image = filter.grayScale(image)
+  image = filter.sharpen(image)
+
+  info = extractInfo(OCR(image))
+  print(registerInfo['Hometown'])
+  print(info['Hometown'])
+  verify = {
+    'FullnameResult': info['Fullname'] == registerInfo['Fullname'],
+    'IdentityNumberResult': info['IdentityNumber'] == registerInfo['IdentityNumber'],
+    'BirthdayResult': info['Birthday'] == registerInfo['Birthday'],
+    'HometownResult': info['Hometown'] == registerInfo['Hometown'],
+    'ProvinceResult': info['Province'] == registerInfo['Province'],
+    'DistrictResult': info['District'] == registerInfo['District']
+  }
+
+  verify['OCRResult'] = verify['FullnameResult'] and verify['IdentityNumberResult'] and verify['BirthdayResult'] and verify['HometownResult'] and verify['ProvinceResult'] and verify['DistrictResult']
+
+  return {
+    'verify': verify,
+    'info': info
+  }

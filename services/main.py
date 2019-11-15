@@ -1,16 +1,20 @@
-from services.imageReader import readURL
+from services.imageReader import readURL, readb64
 from services.ocr import ocr
 from services.faceComparision import compareFaces
 
-def main(IdCardURL, SelfieURL):
+def main(IdCardImage, SelfieImage, registerInfo):
   try:
-    idCardImage = readURL(IdCardURL)
-    selfieImage = readURL(SelfieURL)
-    ocrResponse = ocr(idCardImage)
+    idCardImage = readb64(IdCardImage)
+    selfieImage = readb64(SelfieImage)
+
     facialResponse = compareFaces(idCardImage, selfieImage)
+
+    ocrResponse = ocr(idCardImage, registerInfo)
+
     return {
-      'OCR': ocrResponse,
-      'FacialCompare': facialResponse
+      'OCRInformation': ocrResponse['info'],
+      'OCRResult': ocrResponse['verify'],
+      'Face': facialResponse
     }
   except Exception as e:
     return str(e)
