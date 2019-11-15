@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, Response, request
 from services.main import main
 from services.imageReader import readFromPath
-from flask_sqlalchemy import SQLAlchemy
 import sys
 
 app = Flask(__name__)
