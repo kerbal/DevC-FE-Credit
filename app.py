@@ -29,7 +29,7 @@ def test():
     userid = main(IdCardURL, SelfieURL, info)
     
     return jsonify({
-      "UserId": userid
+      "UserId": str(userid)
     }), 200
   except Exception as e:
     return jsonify({
