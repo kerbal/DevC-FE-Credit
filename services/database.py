@@ -24,7 +24,7 @@ def executeQuery(sql):
 
 def insertUser(PhoneNumber):
   now = getCurrentTimestamp()
-  executeQuery("""insert into "User" ("PhoneNumber", "VerificationStatus", "CreatedAt") values ('{}', {}, '{}')""".format(PhoneNumber, False, now))
+  executeQuery("""insert into "User" ("PhoneNumber", "VerificationStatus", "CreatedAt") values ('{}', '{}', '{}')""".format(PhoneNumber, 0, now))
   response = executeQuery("""select * from "User" where "PhoneNumber" =  '{}' and "CreatedAt" = '{}' """.format(PhoneNumber, now))
   for row in response:
     return row[0]
@@ -47,27 +47,36 @@ def insertResult(userId, faceResult, templateResult, fullnameResult, identityNum
   executeQuery("""insert into "Result" ("UserId", "FaceResult", "TemplateResult", "FullnameResult", "IdentityNumberResult", "BirthdayResult", "HometownResult", "ProvinceResult", "DistrictResult", "OCRResult") values ({}, {}, {}, {}, {}, {}, {}, {}, {}, {})""".format(userId, faceResult, templateResult, fullnameResult, identityNumberResult, birthdayResult, hometownResult, provinceResult, districtResult, ocrResult))
 
 def getUserResult():
-  response = executeQuery("""select "User"."Id", "User"."PhoneNumber", "User"."VerificationStatus", "Result"."OCRResult", "Result"."FaceResult", "Result"."TemplateResult" from "User" join "Result" on "User"."Id" = "Result"."UserId" """)
+  response = executeQuery("""select "User"."Id", "User"."PhoneNumber", "User"."VerificationStatus", "User"."CreatedAt", "Result"."OCRResult", "Result"."FaceResult", "Result"."TemplateResult", "RegisterForm"."Fullname" from "User" join "Result" on "User"."Id" = "Result"."UserId" join "RegisterForm" on "User"."Id" = "RegisterForm"."UserId" """)
   result = []
   for row in response:
     result.append({
       "UserId": row[0],
       "PhoneNumber": row[1],
       "VerificationStatus": row[2],
-      "OCRResult": row[3],
-      "FaceResult": row[4],
-      "TemplateResult": row[5]
+      "CreatedAt": row[3],
+      "OCRResult": row[4],
+      "FaceResult": row[5],
+      "TemplateResult": row[6],
+      "Fullname": row[7]
     })
   return result
 
 def getUserResultById(id):
   response = executeQuery(""" select * from "User", "RegisterForm", "OCRInformation", "Result" where "User"."Id" = "RegisterForm"."UserId" and "User"."Id" = "OCRInformation"."UserId" and "User"."Id" = "Result"."UserId" and "User"."Id" = {} """.format(id))
   result = {}
+  s = set()
   for row in response:
     i = 0
     for key in row.keys():
-      result[key] = row[i]
+      if key not in s:
+        s.add(key)
+        result[key] = row[i]
+      elif key != "Id" and key != "UserId":
+        key = "OCR" + key
+        result[key] = row[i]
       i += 1
+  print(result.keys())
   return result
 
 def getVerificationStatus(id):
@@ -76,5 +85,4 @@ def getVerificationStatus(id):
     return row[0]
 
 def setVerificationStatus(id, status):
-  print(id, status)
-  executeQuery(""" update "User" set "VerificationStatus" = {} where "User"."Id" = {} """.format(status, id))
+  executeQuery(""" update "User" set "VerificationStatus" = '{}' where "User"."Id" = {} """.format(status, id))
