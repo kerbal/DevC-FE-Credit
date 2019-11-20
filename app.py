@@ -65,7 +65,7 @@ def getStatus():
 @app.route("/status", methods=['PUT'])
 def setStatus():
   try:
-    db.setVerificationStatus(request.args.get('id'), int(request.args.get('value')) == 1)
+    db.setVerificationStatus(request.args.get('id'), int(request.args.get('value')))
     return jsonify({
       'message': 'okey'
     }), 200
