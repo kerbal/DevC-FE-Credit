@@ -1,15 +1,12 @@
 import boto3
 from services.imageReader import toBase64Byte
 from config.amazonConfig import AmazonConfig
-from cryptography.fernet import Fernet
 
 def compareFaces(sourceFile, targetFile):
-  key_clock = Fernet(AmazonConfig['KEY_CLOCK'])
-  access_clock = Fernet(AmazonConfig['ACCESS_CLOCK'])
   client = boto3.client(
     'rekognition',
-    aws_access_key_id = key_clock.decrypt(AmazonConfig['ACCESS_KEY']),
-    aws_secret_access_key = access_clock.decrypt(AmazonConfig['SECRET_KEY']),
+    aws_access_key_id = AmazonConfig['ACCESS_KEY'],
+    aws_secret_access_key = AmazonConfig['SECRET_KEY'],
     region_name = AmazonConfig['region_name']
   )
   sourceFile = toBase64Byte(sourceFile)
