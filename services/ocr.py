@@ -66,13 +66,17 @@ def ocr(image, registerInfo):
   tmp = filter.denoise(tmp)
   tmp = filter.advancedEqualizeHist(tmp)
   tmp = filter.denoiseGray(tmp)
-  contour = findContour(tmp)
-  points = np.array(contour.reshape(4, 2) * 1)
-  image = fourPointTransform(image, points)
 
-  image = image[int(image.shape[0] * 0.225) : image.shape[0], 
-                int(image.shape[1] * 0.3) : image.shape[1]]
-  
+  try:
+    contour = findContour(tmp)
+    points = np.array(contour.reshape(4, 2) * 1)
+    image = fourPointTransform(image, points)
+
+    image = image[int(image.shape[0] * 0.225) : image.shape[0], 
+                  int(image.shape[1] * 0.3) : image.shape[1]]
+  except:
+    print('Find contour failed!!!')
+
   image = filter.denoise(image)
   image = filter.grayScale(image)
   image = filter.sharpen(image)
