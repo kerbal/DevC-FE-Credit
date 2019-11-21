@@ -9,3 +9,4 @@ flask
 Pillow
 flask_sqlalchemy
 psycopg2
+pycrypto

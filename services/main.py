@@ -8,10 +8,8 @@ def main(IdCardImage, SelfieImage, registerInfo):
     idCardImage = readb64(IdCardImage)
     selfieImage = readb64(SelfieImage)
 
-    # face = compareFaces(idCardImage, selfieImage)
+    face = compareFaces(idCardImage, selfieImage)
     ocrinfo, verify = ocr(idCardImage, registerInfo)
-
-    face = 80.99
 
     # ocrinfo = {
     #   "Birthday": "04-09-1999",
@@ -31,9 +29,6 @@ def main(IdCardImage, SelfieImage, registerInfo):
     #   "OCRResult": True,
     #   "ProvinceResult": True
     # }
-
-    print(ocrinfo)
-    print(verify)
 
     userId = db.insertUser(registerInfo['PhoneNumber'])
 
@@ -71,7 +66,7 @@ def main(IdCardImage, SelfieImage, registerInfo):
       verify['DistrictResult'],
       verify['OCRResult']
     )
-
+    
     return userId
   except Exception as e:
     print(e)
