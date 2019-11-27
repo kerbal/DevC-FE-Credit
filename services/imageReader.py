@@ -5,7 +5,6 @@ from io import StringIO
 import base64
 from PIL import Image
 import io
-from google.colab.patches import cv2_imshow
 from services.filter import resizeImage
 import random
 
