@@ -4,9 +4,6 @@ from config.amazonConfig import AmazonConfig
 from services.crypto import decode
 
 def compareFaces(sourceFile, targetFile):
-  print("{}".format(decode(AmazonConfig['ACCESS_KEY']))[2:-1][:20])
-  print("{}".format(decode(AmazonConfig['SECRET_KEY']))[2:-1][:40])
-  # return 0
   client = boto3.client(
     'rekognition',
     aws_access_key_id = "{}".format(decode(AmazonConfig['ACCESS_KEY']))[2:-1][:20],

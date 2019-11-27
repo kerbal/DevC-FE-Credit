@@ -1,5 +1,6 @@
 from services.contour import findContour, fourPointTransform, orderPoints
 import services.filter as filter
+from services.imageReader import displayImage
 import numpy as np 
 from services.googleVision import OCR
 import json
@@ -62,21 +63,6 @@ def extractInfo(text):
   }
 
 def ocr(image, registerInfo):
-  tmp = image.copy()
-  tmp = filter.denoise(tmp)
-  tmp = filter.advancedEqualizeHist(tmp)
-  tmp = filter.denoiseGray(tmp)
-
-  try:
-    contour = findContour(tmp)
-    points = np.array(contour.reshape(4, 2) * 1)
-    image = fourPointTransform(image, points)
-
-    image = image[int(image.shape[0] * 0.225) : image.shape[0], 
-                  int(image.shape[1] * 0.3) : image.shape[1]]
-  except:
-    print('Find contour failed!!!')
-
   image = filter.denoise(image)
   image = filter.grayScale(image)
   image = filter.sharpen(image)

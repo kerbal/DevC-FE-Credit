@@ -1,5 +1,6 @@
 import cv2
 import numpy as np 
+import services.filter as filter
 
 def findContour(image):
   edged = cv2.Canny(image, 35, 55)
@@ -48,3 +49,21 @@ def fourPointTransform(image, pts):
   M = cv2.getPerspectiveTransform(rect, dst)
   warped = cv2.warpPerspective(image, M, (maxWidth, maxHeight))
   return warped
+
+def cropContour(image):
+  tmp = image.copy()
+  tmp = filter.denoise(tmp)
+  tmp = filter.advancedEqualizeHist(tmp)
+  tmp = filter.denoiseGray(tmp)
+
+  try:
+    contour = findContour(tmp)
+    points = np.array(contour.reshape(4, 2) * 1)
+    image = fourPointTransform(image, points)
+
+    # image = image[int(image.shape[0] * 0.225) : image.shape[0], 
+    #               int(image.shape[1] * 0.3) : image.shape[1]]
+    return image, True
+  except:
+    print('Find contour failed!!!')
+    return image, False

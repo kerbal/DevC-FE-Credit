@@ -26,14 +26,20 @@ def test():
       'PhoneNumber': request.json['PhoneNumber']
     }
 
-    userid = main(IdCardURL, SelfieURL, info)
-    
-    return jsonify({
-      "UserId": str(userid)
-    }), 200
+    response = main(IdCardURL, SelfieURL, info)
+    success = response['success']
+
+    if success == True: 
+      return jsonify({
+        "UserId": str(response['userId'])
+      }), 200
+    else:
+      return jsonify({
+        "Message": str(response['message'])
+      }), 400
   except Exception as e:
     return jsonify({
-      'message': str(e)
+      'Message': str(e)
     }), 400
 
 @app.route("/forms")

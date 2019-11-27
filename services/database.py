@@ -42,12 +42,15 @@ def insertOCRForm(userId, fullname, identityNumber, birthday, hometown, province
   now = getCurrentTimestamp()
   executeQuery("""insert into "OCRInformation" ("UserId", "Fullname", "IdentityNumber", "Birthday", "Hometown", "Province", "District") values ({}, '{}', '{}', '{}', '{}', '{}', '{}')""".format(userId, fullname, identityNumber, birthday, hometown, province, district))
 
-def insertResult(userId, faceResult, templateResult, fullnameResult, identityNumberResult, birthdayResult, hometownResult, provinceResult, districtResult, ocrResult):
+def insertResult(userId, faceResult, fullnameResult, identityNumberResult, birthdayResult, hometownResult, provinceResult, districtResult, ocrResult, quocHuyScore, quocNguScore, tenGiayScore, tieuNguScore):
   now = getCurrentTimestamp()
-  executeQuery("""insert into "Result" ("UserId", "FaceResult", "TemplateResult", "FullnameResult", "IdentityNumberResult", "BirthdayResult", "HometownResult", "ProvinceResult", "DistrictResult", "OCRResult") values ({}, {}, {}, {}, {}, {}, {}, {}, {}, {})""".format(userId, faceResult, templateResult, fullnameResult, identityNumberResult, birthdayResult, hometownResult, provinceResult, districtResult, ocrResult))
+  executeQuery("""insert into "Result" ("UserId", "FaceResult", "FullnameResult", "IdentityNumberResult", "BirthdayResult", "HometownResult", "ProvinceResult", "DistrictResult", "OCRResult", "QuocHuyScore", "QuocNguScore", "TenGiayScore", "TieuNguScore") values ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})""".format(userId, faceResult, fullnameResult, identityNumberResult, birthdayResult, hometownResult, provinceResult, districtResult, ocrResult, quocHuyScore, quocNguScore, tenGiayScore, tieuNguScore))
+
+def insertImages(userId, croppedImage, quocHuyImage, tieuDeImage, chanDungImage):
+  executeQuery("""insert into "Images" ("UserId", "CroppedImage", "QuocHuyImage", "TieuDeImage", "ChanDungImage") values ({}, '{}', '{}', '{}', '{}')""".format(userId, croppedImage, quocHuyImage, tieuDeImage, chanDungImage))
 
 def getUserResult():
-  response = executeQuery("""select "User"."Id", "User"."PhoneNumber", "User"."VerificationStatus", "User"."CreatedAt", "Result"."OCRResult", "Result"."FaceResult", "Result"."TemplateResult", "RegisterForm"."Fullname" from "User" join "Result" on "User"."Id" = "Result"."UserId" join "RegisterForm" on "User"."Id" = "RegisterForm"."UserId" """)
+  response = executeQuery("""select "User"."Id", "User"."PhoneNumber", "User"."VerificationStatus", "User"."CreatedAt", "Result"."OCRResult", "Result"."FaceResult", "RegisterForm"."Fullname" from "User" join "Result" on "User"."Id" = "Result"."UserId" join "RegisterForm" on "User"."Id" = "RegisterForm"."UserId" """)
   result = []
   for row in response:
     result.append({
@@ -57,13 +60,12 @@ def getUserResult():
       "CreatedAt": row[3],
       "OCRResult": row[4],
       "FaceResult": row[5],
-      "TemplateResult": row[6],
-      "Fullname": row[7]
+      "Fullname": row[6]
     })
   return result
 
 def getUserResultById(id):
-  response = executeQuery(""" select * from "User", "RegisterForm", "OCRInformation", "Result" where "User"."Id" = "RegisterForm"."UserId" and "User"."Id" = "OCRInformation"."UserId" and "User"."Id" = "Result"."UserId" and "User"."Id" = {} """.format(id))
+  response = executeQuery(""" select * from "User", "RegisterForm", "OCRInformation", "Result", "Images" where "User"."Id" = "RegisterForm"."UserId" and "User"."Id" = "OCRInformation"."UserId" and "User"."Id" = "Result"."UserId" and "User"."Id" = {} and "User"."Id" = "Images"."UserId" """.format(id))
   result = {}
   s = set()
   for row in response:
@@ -76,7 +78,6 @@ def getUserResultById(id):
         key = "OCR" + key
         result[key] = row[i]
       i += 1
-  print(result.keys())
   return result
 
 def getVerificationStatus(id):

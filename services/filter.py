@@ -20,16 +20,22 @@ def denoiseGray(gray):
   return cv2.GaussianBlur(gray, (5, 5), 0)
 
 def binarize(img_grayscale, thresh=100):
-  img_binary = cv2.adaptiveThreshold(img_grayscale, 
-                                    maxValue=255, 
-                                    adaptiveMethod=cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
-                                    thresholdType=cv2.THRESH_BINARY,
-                                    blockSize=15,
-                                    C=8)
+  # img_binary = cv2.adaptiveThreshold(img_grayscale, 
+  #                                   maxValue=255, 
+  #                                   adaptiveMethod=cv2.ADAPTIVE_THRESH_GAUSSIAN_C, 
+  #                                   thresholdType=cv2.THRESH_BINARY,
+  #                                   blockSize=15,
+  #                                   C=8)
+  rect, img_binary = cv2.threshold(img_grayscale,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
   return img_binary
 
 def advancedEqualizeHist(image):
   clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(4,4))
+  cl1 = clahe.apply(grayScale(image))
+  return cl1
+
+def advancedEqualizeHistForQ(image):
+  clahe = cv2.createCLAHE(clipLimit=1.0, tileGridSize=(4,4))
   cl1 = clahe.apply(grayScale(image))
   return cl1
 
