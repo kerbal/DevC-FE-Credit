@@ -24,7 +24,8 @@ def readFromPath(path):
 def readb64(base64_string):
   imgdata = base64.b64decode(str(base64_string))
   image = Image.open(io.BytesIO(imgdata))
-  image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
+  image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+
   if image.shape[1] > 1920:
     return resizeImage(image, 1920 / image.shape[1] * 100)
   else:

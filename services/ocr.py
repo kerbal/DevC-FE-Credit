@@ -41,6 +41,15 @@ def extractInfo(text):
   for c in ['|', '.', ':', '\n', '=', '…']:
     text = text.strip().replace(c, ' ').strip()
   text = ' '.join(text.split())
+  
+  while text[-1].isalpha() == False:
+    text = text[: -1]
+
+  text = text.replace('đkhđ', 'đkhk')
+  text = text.replace('đkhd', 'đkhk')
+  text = text.replace('đkhh', 'đkhk')
+
+  print(text)
   begin_number = text.find('số')
   begin_name = text.find('họ tên')
   begin_bd = text.find('sinh ngày')
@@ -63,22 +72,22 @@ def extractInfo(text):
   }
 
 def ocr(image, registerInfo):
-  # image = filter.denoise(image)
-  # image = filter.advancedEqualizeHist(image)
-  # image = filter.grayScale(image)
-  # image = filter.denoiseGray(image)
+  image = filter.denoise(image)
+  image = filter.grayScale(image)
+  image = filter.denoiseGray(image)
   # image = filter.sharpen(image)
   # displayImage(image)
 
   info = extractInfo(OCR(image))
 
+  print(info)
   verify = {
-    'FullnameResult': info['Fullname'] == registerInfo['Fullname'],
+    'FullnameResult': info['Fullname'].lower() == registerInfo['Fullname'].lower(),
     'IdentityNumberResult': info['IdentityNumber'] == registerInfo['IdentityNumber'],
     'BirthdayResult': info['Birthday'] == registerInfo['Birthday'],
-    'HometownResult': info['Hometown'] == registerInfo['Hometown'],
-    'ProvinceResult': info['Province'] == registerInfo['Province'],
-    'DistrictResult': info['District'] == registerInfo['District']
+    'HometownResult': info['Hometown'].lower() == registerInfo['Hometown'].lower(),
+    'ProvinceResult': info['Province'].lower() == registerInfo['Province'].lower(),
+    'DistrictResult': info['District'].lower() == registerInfo['District'].lower()
   }
 
   verify['OCRResult'] = verify['FullnameResult'] and verify['IdentityNumberResult'] and verify['BirthdayResult'] and verify['HometownResult'] and verify['ProvinceResult'] and verify['DistrictResult']

@@ -88,6 +88,9 @@ def compare_quochuy(img1):
       crop1 = quochuygoc[round((x/m)*h):round((x/m)*h) + round((1/m)*h), round((y/m)*w):round((y/m)*w) + round((1/m)*w)]
       crop2 = img1[round((x/m)*h):round((x/m)*h) + round((1/m)*h), round((y/m)*w):round((y/m)*w) + round((1/m)*w)]
       temp = template_match(crop2, crop1)
+
+    
+
       if (temp < 0.5 and temp > 0.4):
         sum += 2
         confidenceSum += temp
@@ -344,5 +347,5 @@ def compare_tieude(img):
         confidenceSum += temp
         
     confidenceTengiay = confidenceSum/sum
-  # displayImage(cmnd)
+  displayImage(cmnd)
   return confidenceQuocngu, confidenceTengiay, confidenceTieungu, cmnd
