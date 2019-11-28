@@ -9,8 +9,9 @@ def OCR(image, template = False):
   success, encoded_image = cv2.imencode('.png', image)
   encoded_image = encoded_image.tobytes()
   img = vision.types.Image(content=encoded_image)
-  response = client.document_text_detection(image=img)
+  response = client.document_text_detection(image=img, image_context={"language_hints": ["vi"]})
   if template == False:
+    print(response.text_annotations[0].description)
     return response.text_annotations[0].description
   else:
     return response.text_annotations

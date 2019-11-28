@@ -47,11 +47,11 @@ def extractInfo(text):
   begin_address1 = text.find('nguyên quán')
   begin_address2 = text.find('nơi đkhk thường trú')
   number = text[begin_number + 2 : begin_name].strip().replace(' ', '')
-  name = text[begin_name + 6 : begin_bd].strip()
+  name = text[begin_name + 6 : begin_bd].strip().replace('-', '').replace('  ', ' ')
   bd = text[begin_bd + 9: begin_address1].strip()
-  hometown = text[begin_address1 + 11 : begin_address2].strip().split(',')[-1].strip()
-  province = text[begin_address2 + 19 : ].strip().split(',')[-1].strip()
-  district = text[begin_address2 + 19 : ].strip().split(',')[-2].strip().replace('tp', '').strip()
+  hometown = text[begin_address1 + 11 : begin_address2].strip().split(',')[-1].strip().replace('-', '').replace('  ', ' ')
+  province = text[begin_address2 + 19 : ].strip().split(',')[-1].strip().replace('-', '').replace('  ', ' ')
+  district = text[begin_address2 + 19 : ].strip().split(',')[-2].strip().replace('tp', '').strip().replace('-', '').replace('  ', ' ')
 
   return {
     'IdentityNumber': number,
@@ -63,9 +63,12 @@ def extractInfo(text):
   }
 
 def ocr(image, registerInfo):
-  image = filter.denoise(image)
-  image = filter.grayScale(image)
-  image = filter.sharpen(image)
+  # image = filter.denoise(image)
+  # image = filter.advancedEqualizeHist(image)
+  # image = filter.grayScale(image)
+  # image = filter.denoiseGray(image)
+  # image = filter.sharpen(image)
+  # displayImage(image)
 
   info = extractInfo(OCR(image))
 
