@@ -54,13 +54,13 @@ def extractInfo(text):
   begin_name = text.find('họ tên')
   begin_bd = text.find('sinh ngày')
   begin_address1 = text.find('nguyên quán')
-  begin_address2 = text.find('nơi đkhk thường trú')
+  begin_address2 = text.find('trú')
   number = text[begin_number + 2 : begin_name].strip().replace(' ', '')
   name = text[begin_name + 6 : begin_bd].strip().replace('-', '').replace('  ', ' ')
   bd = text[begin_bd + 9: begin_address1].strip()
-  hometown = text[begin_address1 + 11 : begin_address2].strip().split(',')[-1].strip().replace('-', '').replace('  ', ' ')
-  province = text[begin_address2 + 19 : ].strip().split(',')[-1].strip().replace('-', '').replace('  ', ' ')
-  district = text[begin_address2 + 19 : ].strip().split(',')[-2].strip().replace('tp', '').strip().replace('-', '').replace('  ', ' ')
+  hometown = text[begin_address1 + 11 : text.find("nơi")].strip().split(',')[-1].strip().replace('-', '').replace('  ', ' ')
+  province = text[begin_address2 + 3 : ].strip().split(',')[-1].strip().replace('-', '').replace('  ', ' ')
+  district = text[begin_address2 + 3 : ].strip().split(',')[-2].strip().replace('tp', '').strip().replace('-', '').replace('  ', ' ')
 
   return {
     'IdentityNumber': number,

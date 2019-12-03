@@ -89,7 +89,10 @@ def compare_quochuy(img1):
       crop2 = img1[round((x/m)*h):round((x/m)*h) + round((1/m)*h), round((y/m)*w):round((y/m)*w) + round((1/m)*w)]
       temp = template_match(crop2, crop1)
 
-    
+      if (temp < 0.5):
+        top_left = (round((y/m)*w), round((x/m)*h))
+        bot_right = (round((y/m)*w) + round((1/m)*w), round((x/m)*h) + round((1/m)*h))
+        img1 = cv2.rectangle(img1, top_left, bot_right, (255,0,0), 1)
 
       if (temp < 0.5 and temp > 0.4):
         sum += 2
@@ -110,7 +113,7 @@ def compare_quochuy(img1):
         sum += 1
         confidenceSum += temp
 
-  # displayImage(img1)
+  displayImage(img1)
   return confidenceSum / sum, img1
 
 def compare_tieude(img):
@@ -153,14 +156,14 @@ def compare_tieude(img):
     # print(quocngu_crop)
     quocngu_goc = readFromPath('./pictures/quoc ngu.jpg')
     quocngu_words = []
-    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], 0:int(quocngu_goc.shape[1]*0.19)])
-    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], int(quocngu_goc.shape[1]*0.19):int(quocngu_goc.shape[1]*0.3)])
-    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], int(quocngu_goc.shape[1]*0.3):int(quocngu_goc.shape[1]*0.37)])
-    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], int(quocngu_goc.shape[1]*0.37):int(quocngu_goc.shape[1]*0.47)])
-    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], int(quocngu_goc.shape[1]*0.47):int(quocngu_goc.shape[1]*0.57)])
-    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], int(quocngu_goc.shape[1]*0.57):int(quocngu_goc.shape[1]*0.73)])
-    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], int(quocngu_goc.shape[1]*0.73):int(quocngu_goc.shape[1]*0.85)])
-    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], int(quocngu_goc.shape[1]*0.85):quocngu_goc.shape[1]])
+    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], 0:int(quocngu_goc.shape[1]*0.196)])
+    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], int(quocngu_goc.shape[1]*0.183):int(quocngu_goc.shape[1]*0.306)])
+    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], int(quocngu_goc.shape[1]*0.285):int(quocngu_goc.shape[1]*0.382)])
+    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], int(quocngu_goc.shape[1]*0.367):int(quocngu_goc.shape[1]*0.473)])
+    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], int(quocngu_goc.shape[1]*0.457):int(quocngu_goc.shape[1]*0.585)])
+    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], int(quocngu_goc.shape[1]*0.57):int(quocngu_goc.shape[1]*0.738)])
+    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], int(quocngu_goc.shape[1]*0.728):int(quocngu_goc.shape[1]*0.85)])
+    quocngu_words.append(quocngu_goc[0:quocngu_goc.shape[0], int(quocngu_goc.shape[1]*0.841):quocngu_goc.shape[1]]) 
     
     for i in range(k, k + 8):
       top_left_x = texts[i].bounding_poly.vertices[0].x
@@ -226,14 +229,14 @@ def compare_tieude(img):
 
     tieungu_goc = readFromPath('./pictures/tieu ngu.jpg')
     tieungu_words = []
-    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], 0:int(tieungu_goc.shape[1]*0.17)])
-    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], int(tieungu_goc.shape[1]*0.17):int(tieungu_goc.shape[1]*0.29)])
-    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], int(tieungu_goc.shape[1]*0.29):int(tieungu_goc.shape[1]*0.34)])
-    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], int(tieungu_goc.shape[1]*0.34):int(tieungu_goc.shape[1]*0.45)])
-    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], int(tieungu_goc.shape[1]*0.45):int(tieungu_goc.shape[1]*0.55)])
-    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], int(tieungu_goc.shape[1]*0.55):int(tieungu_goc.shape[1]*0.6)])
-    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], int(tieungu_goc.shape[1]*0.6):int(tieungu_goc.shape[1]*0.8)])
-    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], int(tieungu_goc.shape[1]*0.8):tieungu_goc.shape[1]])
+    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], 0:int(tieungu_goc.shape[1]*0.183)])
+    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], int(tieungu_goc.shape[1]*0.161):int(tieungu_goc.shape[1]*0.303)])
+    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], int(tieungu_goc.shape[1]*0.28):int(tieungu_goc.shape[1]*0.351)])
+    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], int(tieungu_goc.shape[1]*0.329):int(tieungu_goc.shape[1]*0.459)])
+    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], int(tieungu_goc.shape[1]*0.444):int(tieungu_goc.shape[1]*0.562)])
+    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], int(tieungu_goc.shape[1]*0.54):int(tieungu_goc.shape[1]*0.612)])
+    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], int(tieungu_goc.shape[1]*0.587):int(tieungu_goc.shape[1]*0.814)])
+    tieungu_words.append(tieungu_goc[0:tieungu_goc.shape[0], int(tieungu_goc.shape[1]*0.787):tieungu_goc.shape[1]])
 
     for i in range(k, k + 8):
 
@@ -303,11 +306,11 @@ def compare_tieude(img):
     tengiay_goc = cv2.cvtColor(tengiay_goc, cv2.COLOR_BGR2RGB)
     
     tengiay_words = []
-    tengiay_words.append(tengiay_goc[0:tengiay_goc.shape[0], 0:int(tengiay_goc.shape[1]*0.2)])
-    tengiay_words.append(tengiay_goc[0:tengiay_goc.shape[0], int(tengiay_goc.shape[1]*0.2):int(tengiay_goc.shape[1]*0.43)])
-    tengiay_words.append(tengiay_goc[0:tengiay_goc.shape[0], int(tengiay_goc.shape[1]*0.43):int(tengiay_goc.shape[1]*0.62)])
-    tengiay_words.append(tengiay_goc[0:tengiay_goc.shape[0], int(tengiay_goc.shape[1]*0.62):int(tengiay_goc.shape[1]*0.81)])
-    tengiay_words.append(tengiay_goc[0:tengiay_goc.shape[0], int(tengiay_goc.shape[1]*0.81):tengiay_goc.shape[1]])
+    tengiay_words.append(tengiay_goc[0:tengiay_goc.shape[0], 0:int(tengiay_goc.shape[1]*0.204)])
+    tengiay_words.append(tengiay_goc[0:tengiay_goc.shape[0], int(tengiay_goc.shape[1]*0.19):int(tengiay_goc.shape[1]*0.447)])
+    tengiay_words.append(tengiay_goc[0:tengiay_goc.shape[0], int(tengiay_goc.shape[1]*0.423):int(tengiay_goc.shape[1]*0.634)])
+    tengiay_words.append(tengiay_goc[0:tengiay_goc.shape[0], int(tengiay_goc.shape[1]*0.611):int(tengiay_goc.shape[1]*0.832)])
+    tengiay_words.append(tengiay_goc[0:tengiay_goc.shape[0], int(tengiay_goc.shape[1]*0.805):tengiay_goc.shape[1]])
 
     for i in range(k, k + 5):
       top_left_x = texts[i].bounding_poly.vertices[0].x
