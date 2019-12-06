@@ -113,7 +113,7 @@ def compare_quochuy(img1):
         sum += 1
         confidenceSum += temp
 
-  displayImage(img1)
+  # displayImage(img1)
   return confidenceSum / sum, img1
 
 def compare_tieude(img):
@@ -350,5 +350,5 @@ def compare_tieude(img):
         confidenceSum += temp
         
     confidenceTengiay = confidenceSum/sum
-  displayImage(cmnd)
+  # displayImage(cmnd)
   return confidenceQuocngu, confidenceTengiay, confidenceTieungu, cmnd
