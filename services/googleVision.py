@@ -2,8 +2,10 @@ import cv2
 from google.cloud.vision import types
 from google.cloud import vision
 import os
+from config.googleAPIKey import writeKey, closeKey
 
 def OCR(image, template = False):
+  writeKey()
   os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getcwd() + '/config/google api key.json'
   client = vision.ImageAnnotatorClient()
 
@@ -12,6 +14,7 @@ def OCR(image, template = False):
   img = vision.types.Image(content=encoded_image)
   
   response = client.document_text_detection(image=img, image_context={"language_hints": ["vi"]})
+  closeKey()
   if template == False:
     print(response.text_annotations[0].description)
     return response.text_annotations[0].description

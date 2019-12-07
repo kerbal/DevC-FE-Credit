@@ -79,6 +79,7 @@ def main(IdCardImage, SelfieImage, registerInfo):
     #   "ProvinceResult": True
     # }
 
+    # return
     userId = db.insertUser(registerInfo['PhoneNumber'])
 
     db.insertRegisterForm(
