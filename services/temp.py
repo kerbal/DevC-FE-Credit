@@ -62,8 +62,8 @@ def template_match(img, template):
 def compare_quochuy(img1):
   img1 = filter.resizeImage(img1, 1323 / img1.shape[1] * 100)
   img1 = get_quochuy(img1)
-  img1 = unsharp_mask_quochuy(img1)
-  img1 = filter.denoise(img1)
+  drawn = img1.copy()
+
   #Quốc huy chuẩn
   quochuygoc = readFromPath('./pictures/quoc huy.png')
   # quochuygoc = cv2.cvtColor(quochuygoc, cv2.COLOR_BGR2RGB)
@@ -89,40 +89,33 @@ def compare_quochuy(img1):
       crop2 = img1[round((x/m)*h):round((x/m)*h) + round((1/m)*h), round((y/m)*w):round((y/m)*w) + round((1/m)*w)]
       temp = template_match(crop2, crop1)
 
-      if (temp < 0.5):
-        top_left = (round((y/m)*w), round((x/m)*h))
-        bot_right = (round((y/m)*w) + round((1/m)*w), round((x/m)*h) + round((1/m)*h))
-        img1 = cv2.rectangle(img1, top_left, bot_right, (255,0,0), 1)
-
-      if (temp < 0.5 and temp > 0.4):
-        sum += 2
-        confidenceSum += temp
-      elif (temp < 0.4 and temp > 0.3):
-        sum += 4
-        confidenceSum += temp
-      elif (temp < 0.3 and temp > 0.2):
-        sum += 8
-        confidenceSum += temp
-      elif (temp < 0.2 and temp > 0.1):
-        sum += 16
-        confidenceSum += temp
-      elif (temp < 0.1):
-        sum += 32
-        confidenceSum += temp
-      else :
+      if temp >= 0.8:
         sum += 1
         confidenceSum += temp
+      elif temp < 0.7:
+        sum += 4
+        confidenceSum += temp
+        top_left = (round((y/m)*w), round((x/m)*h))
+        bot_right = (round((y/m)*w) + round((1/m)*w), round((x/m)*h) + round((1/m)*h))
+        cv2.rectangle(drawn,top_left,bot_right,(255,0,0),2)
+      else:
+        sum += 2
+        confidenceSum += temp
+        top_left = (round((y/m)*w), round((x/m)*h))
+        bot_right = (round((y/m)*w) + round((1/m)*w), round((x/m)*h) + round((1/m)*h))
+        cv2.rectangle(drawn,top_left,bot_right,(255,165,0),2)
 
   # displayImage(img1)
-  return confidenceSum / sum, img1
+  return confidenceSum / sum, drawn
 
 def compare_tieude(img):
   img = filter.resizeImage(img, 1323 / img.shape[1] * 100)
   #preprocess
-  img_ocr = img[int(img.shape[0] * 0.01) : int(img.shape[0] * 0.25), int(img.shape[1] * 0.3) : int(img.shape[1] * 0.98)]
+  img_ocr = img[0 : int(img.shape[0] * 0.25), int(img.shape[1] * 0.3) : int(img.shape[1] * 0.98)]
   img_ocr = filter.denoise(img_ocr)
 
   cmnd = img_ocr
+  drawn = cmnd.copy()
   # cmnd = cv2.cvtColor(cmnd, cv2.COLOR_BGR2RGB)
 
   img_ocr = filter.advancedEqualizeHist(img_ocr)
@@ -180,27 +173,17 @@ def compare_tieude(img):
         temp = template_match(quocngu_words[i - k], word)
 
       # print(temp)
-      if temp < 0.5:
-        cv2.rectangle(cmnd,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(0,0,255),1)
-        
-      if (temp < 0.5 and temp > 0.4):
-        sum += 2
-        confidenceSum += temp
-      elif (temp < 0.4 and temp > 0.3):
-        sum += 4
-        confidenceSum += temp
-      elif (temp < 0.3 and temp > 0.2):
-        sum += 8
-        confidenceSum += temp
-      elif (temp < 0.2 and temp > 0.1):
-        sum += 16
-        confidenceSum += temp
-      elif (temp < 0.1):
-        sum += 32
-        confidenceSum += temp
-      else :
+      if temp >= 0.8:
         sum += 1
         confidenceSum += temp
+      elif temp < 0.7:
+        sum += 4
+        confidenceSum += temp
+        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(255,0,0),2)
+      else:
+        sum += 2
+        confidenceSum += temp
+        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(255,165,0),2)
       
     confidenceQuocngu = confidenceSum/sum
 
@@ -253,27 +236,17 @@ def compare_tieude(img):
       else:
         temp = template_match(tieungu_words[i - k], word)
 
-      if temp < 0.5:
-        cv2.rectangle(cmnd,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(0,0,255),1)
-
-      if (temp < 0.5 and temp > 0.4):
-        sum += 2
-        confidenceSum += temp
-      elif (temp < 0.4 and temp > 0.3):
-        sum += 4
-        confidenceSum += temp
-      elif (temp < 0.3 and temp > 0.2):
-        sum += 8
-        confidenceSum += temp
-      elif (temp < 0.2 and temp > 0.1):
-        sum += 16
-        confidenceSum += temp
-      elif (temp < 0.1):
-        sum += 32
-        confidenceSum += temp
-      else :
+      if temp >= 0.8:
         sum += 1
         confidenceSum += temp
+      elif temp < 0.7:
+        sum += 4
+        confidenceSum += temp
+        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(255,0,0),2)
+      else:
+        sum += 2
+        confidenceSum += temp
+        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(255,165,0),2)
       
     confidenceTieungu = confidenceSum/sum
 
@@ -303,8 +276,6 @@ def compare_tieude(img):
     #Lấy tiêu ngữ chuẩn và các chữ trong tiêu ngữ
 
     tengiay_goc = readFromPath('./pictures/tieu de.jpg')
-    tengiay_goc = cv2.cvtColor(tengiay_goc, cv2.COLOR_BGR2RGB)
-    
     tengiay_words = []
     tengiay_words.append(tengiay_goc[0:tengiay_goc.shape[0], 0:int(tengiay_goc.shape[1]*0.204)])
     tengiay_words.append(tengiay_goc[0:tengiay_goc.shape[0], int(tengiay_goc.shape[1]*0.19):int(tengiay_goc.shape[1]*0.447)])
@@ -327,28 +298,19 @@ def compare_tieude(img):
         temp = template_match(tengiay_words[i - k], word)
 
       # print(temp)
-      if temp < 0.5:
-        cv2.rectangle(cmnd,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(0,0,255),1)
-
-      if (temp < 0.5 and temp > 0.4):
-        sum += 2
-        confidenceSum += temp
-      elif (temp < 0.4 and temp > 0.3):
-        sum += 4
-        confidenceSum += temp
-      elif (temp < 0.3 and temp > 0.2):
-        sum += 8
-        confidenceSum += temp
-      elif (temp < 0.2 and temp > 0.1):
-        sum += 16
-        confidenceSum += temp
-      elif (temp < 0.1):
-        sum += 32
-        confidenceSum += temp
-      else :
+      if temp >= 0.8:
         sum += 1
         confidenceSum += temp
+      elif temp < 0.7:
+        sum += 4
+        confidenceSum += temp
+        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(255,0,0),2)
+      else:
+        sum += 2
+        confidenceSum += temp
+        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(255,165,0),2)
+
         
     confidenceTengiay = confidenceSum/sum
   # displayImage(cmnd)
-  return confidenceQuocngu, confidenceTengiay, confidenceTieungu, cmnd
+  return confidenceQuocngu, confidenceTengiay, confidenceTieungu, drawn
