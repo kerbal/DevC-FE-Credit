@@ -1,1 +1,1 @@
-web: gunicorn app:app production --timeout 50
+web: gunicorn app:app production --timeout 90
