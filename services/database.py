@@ -5,7 +5,7 @@ from math import floor
 import sys
 
 dburi = ''
-if len(sys.argv) == 3:
+if len(sys.argv) > 3:
   dburi = 'postgres://whghbahrsilwgi:e42dc554baed5f277851a6beda9984036ac56ad7a0527a4cb4c1f7f6d208b67b@ec2-107-21-94-185.compute-1.amazonaws.com:5432/d9ga0aonco08mb'
 else:
   dburi = 'postgresql://khanh:1234@localhost:5432/devcfe'
