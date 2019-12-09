@@ -13,6 +13,7 @@ def home():
 @app.route("/register", methods=['POST'])
 def test():
   try:
+    print('REGISTERING...')
     IdCardURL = request.json['IDCardImage']
     SelfieURL = request.json['SelfieImage']
 

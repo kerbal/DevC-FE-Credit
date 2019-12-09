@@ -97,13 +97,13 @@ def compare_quochuy(img1):
         confidenceSum += temp
         top_left = (round((y/m)*w), round((x/m)*h))
         bot_right = (round((y/m)*w) + round((1/m)*w), round((x/m)*h) + round((1/m)*h))
-        cv2.rectangle(drawn,top_left,bot_right,(255,0,0),2)
+        cv2.rectangle(drawn,top_left,bot_right,(0, 0 , 255),2)
       else:
         sum += 2
         confidenceSum += temp
         top_left = (round((y/m)*w), round((x/m)*h))
         bot_right = (round((y/m)*w) + round((1/m)*w), round((x/m)*h) + round((1/m)*h))
-        cv2.rectangle(drawn,top_left,bot_right,(255,165,0),2)
+        cv2.rectangle(drawn,top_left,bot_right,(0,165,255),2)
 
   # displayImage(img1)
   return confidenceSum / sum, drawn
@@ -179,11 +179,11 @@ def compare_tieude(img):
       elif temp < 0.7:
         sum += 4
         confidenceSum += temp
-        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(255,0,0),2)
+        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(0,0,255),2)
       else:
         sum += 2
         confidenceSum += temp
-        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(255,165,0),2)
+        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(0, 165,255),2)
       
     confidenceQuocngu = confidenceSum/sum
 
@@ -242,11 +242,11 @@ def compare_tieude(img):
       elif temp < 0.7:
         sum += 4
         confidenceSum += temp
-        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(255,0,0),2)
+        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(0,0, 255),2)
       else:
         sum += 2
         confidenceSum += temp
-        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(255,165,0),2)
+        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(0,165,255),2)
       
     confidenceTieungu = confidenceSum/sum
 
@@ -304,13 +304,12 @@ def compare_tieude(img):
       elif temp < 0.7:
         sum += 4
         confidenceSum += temp
-        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(255,0,0),2)
+        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(0,0,255),2)
       else:
         sum += 2
         confidenceSum += temp
-        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(255,165,0),2)
+        cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(0,165,255),2)
 
-        
     confidenceTengiay = confidenceSum/sum
   # displayImage(cmnd)
   return confidenceQuocngu, confidenceTengiay, confidenceTieungu, drawn
