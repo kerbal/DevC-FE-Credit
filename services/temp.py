@@ -173,10 +173,10 @@ def compare_tieude(img):
         temp = template_match(quocngu_words[i - k], word)
 
       # print(temp)
-      if temp >= 0.8:
+      if temp >= 0.7:
         sum += 1
         confidenceSum += temp
-      elif temp < 0.7:
+      elif temp < 0.6:
         sum += 4
         confidenceSum += temp
         cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(0,0,255),2)
@@ -236,10 +236,10 @@ def compare_tieude(img):
       else:
         temp = template_match(tieungu_words[i - k], word)
 
-      if temp >= 0.8:
+      if temp >= 0.7:
         sum += 1
         confidenceSum += temp
-      elif temp < 0.7:
+      elif temp < 0.6:
         sum += 4
         confidenceSum += temp
         cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(0,0, 255),2)
@@ -298,10 +298,10 @@ def compare_tieude(img):
         temp = template_match(tengiay_words[i - k], word)
 
       # print(temp)
-      if temp >= 0.8:
+      if temp >= 0.7:
         sum += 1
         confidenceSum += temp
-      elif temp < 0.7:
+      elif temp < 0.6:
         sum += 4
         confidenceSum += temp
         cv2.rectangle(drawn,(top_left_x,top_left_y),(bot_right_x,bot_right_y),(0,0,255),2)
